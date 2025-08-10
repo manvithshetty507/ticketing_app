@@ -7,6 +7,8 @@
 - Github Action
 - Redis
 
+    apps/v1 is for Deployments, ReplicaSets, StatefulSets (workloads).
+    v1 is for core resources like Services, Pods, ConfigMaps.
 
 # Some Kube commands
     kubectl get deployments -n ingress-nginx
@@ -30,3 +32,40 @@
     kubectl get svc -n infra
     kubectl get pods -n infra
 
+# clear everthing
+    kubectl delete all --all --all-namespaces
+    kubectl delete namespace ingress-nginx metallb-system --ignore-not-found
+    kubectl delete clusterrolebinding --all
+    kubectl delete clusterrole --all --ignore-not-found
+    kubectl delete pv --all --ignore-not-found
+
+# setup test nginx
+### Create a test deployment
+    kubectl create deployment nginx --image=nginx
+    kubectl expose deployment nginx --port=80
+
+### Create an ingress rule
+    kubectl create ingress nginx --rule="example.com/*=nginx:80"
+
+### Test it (replace with your actual IP if not using Docker Desktop)
+    curl -H "Host: example.com" http://localhost
+
+# Delete test nginx
+### Delete the ingress rule
+    kubectl delete ingress nginx
+
+### Delete the service
+    kubectl delete service nginx
+
+### Delete the deployment
+    kubectl delete deployment nginx
+
+User Request (example.com)  
+       ↓  
+   Load Balancer / NodePort (if on cloud/local)  
+       ↓  
+   Ingress-NGINX Controller (decides routing)  
+       ↓  
+   Kubernetes Service (exposes your app)  
+       ↓  
+   Pods (running your app)  
