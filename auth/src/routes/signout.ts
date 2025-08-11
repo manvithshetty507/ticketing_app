@@ -3,9 +3,12 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 
 router
-    .post("/api/users/signout", (req: Request, res: Response) => {
-        console.log('Sign Out route hit');
-        res.send('Sign Out successful');
+    .post("/signout", (req: Request, res: Response) => {
+        // Clear the session cookie
+        req.session = null;
+
+        // Respond with a success message
+        res.status(204).send({});
     })
 
 export { router as signoutRouter };

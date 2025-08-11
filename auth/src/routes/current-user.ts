@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
+import { userController } from '../controller/userController-current-user';
+import { currentUserMiddleware } from '../middlewares/current-user';
+import { requireAuth } from '../middlewares/require-auth';
 
 const router = express.Router();
 
 router
-    .get("/currentUser", (req : Request, res: Response) => {
-        console.log('Current User route hit');
-        res.send('Welcome to the Auth Service');
-    })
+    .get("/currentUser", currentUserMiddleware, requireAuth, userController)
 
 export { router as currentUserRouter };

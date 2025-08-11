@@ -1,11 +1,19 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { body } from 'express-validator';
+import { userController } from '../controller/userController-signin';
+import { ValidateRequestMiddleware } from "../middlewares/validate-request";
 
 const router = express.Router();
 
 router
-    .post("/api/users/signin", (req: Request, res: Response) => {
-        console.log('Sign In route hit');
-        res.send('Sign In successful');
-    })
+    .post("/signin", [
+        body("email")
+            .isEmail()
+            .withMessage("Email must be valid"),
+        body("password")
+            .trim()
+            .isLength({ min: 6, max: 20 })
+            .withMessage("Password must be between 6 and 20 characters")
+    ], ValidateRequestMiddleware, userController);
 
 export { router as signinRouter };

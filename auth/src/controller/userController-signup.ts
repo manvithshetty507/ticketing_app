@@ -4,13 +4,9 @@ import { User } from "../models/user-model";
 import { BadRequestError } from "../errors/bad-request-error";
 import { JWTUtil } from "../services/Json-web-token";
 
+
 const userController = async (req : Request, res: Response) => {
 
-        const errors = validationResult(req);
-        if(!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-       
         const { email, password } = req.body;
 
         // Handle user signup logic here
@@ -44,14 +40,8 @@ const userController = async (req : Request, res: Response) => {
             jwt: token
         }
 
-        // return back cookie, token
-        return res.status(201).send({
-            user: {
-                id: user.id,
-                email: user.email,
-                token: token
-            }
-        });
+        // to have a common response structure we can use toJson() in the object
+        return res.status(201).send(user);
 
     }
 
