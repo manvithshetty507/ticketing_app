@@ -60,12 +60,19 @@
 ### Delete the deployment
     kubectl delete deployment nginx
 
-User Request (example.com)  
-       ↓  
-   Load Balancer / NodePort (if on cloud/local)  
-       ↓  
-   Ingress-NGINX Controller (decides routing)  
-       ↓  
-   Kubernetes Service (exposes your app)  
-       ↓  
-   Pods (running your app)  
+# Add a Secrete Key
+    kubectl create secret generic jwt-secret --from-literal=JWT_KEY='huHuz/N5gVFKzoTiMefwIpLKC5hJ0p3/fbgvFVqwt+0='
+### Get the yaml for secrete object
+    kubectl get secret jwt-secret -o yaml
+
+
+
+    User Request (example.com)  
+        ↓  
+    Load Balancer / NodePort (if on cloud/local)  
+        ↓  
+    Ingress-NGINX Controller (decides routing)  
+        ↓  
+    Kubernetes Service (exposes your app)  
+        ↓  
+    Pods (running your app)  
