@@ -4,7 +4,7 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      - ./infra/k8s/*.yaml
 
 build:
   local:
@@ -17,4 +17,14 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
+            dest: .
+    - image: manvith507/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.{js,jsx,ts,tsx,css,scss,sass,json}'
+            dest: .
+          - src: 'public/**/*'
             dest: .
