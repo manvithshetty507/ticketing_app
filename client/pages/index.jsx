@@ -11,17 +11,6 @@ export default function Home() {
         <meta name="description" content="Find and book tickets for events" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/x-icon" href="https://png.pngtree.com/png-vector/20240115/ourmid/pngtree-blue-website-icon-vector-png-image_11438142.png" />
-
-         {/* Bootstrap CSS CDN */}
-        <link 
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-          rel="stylesheet"
-        />
-        {/* Bootstrap Icons CDN */}
-        <link 
-          rel="stylesheet" 
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        />
       </Head>
       
       <Header />
@@ -30,10 +19,10 @@ export default function Home() {
         {/* Hero Section */}
         <section className={`${styles.hero} py-5`}>
           <div className="container">
-            <div className="row align-items-center">
+            <div className="row align-items-center custom-circular-gradient-bg">
               <div className="col-md-6">
-                <h1 className="display-4 fw-bold mb-4">Your Events, Our Platform</h1>
-                <p className="lead mb-4">
+                <h1 className="display-4 fw-bold mb-4 text-black">Your Events, Our Platform</h1>
+                <p className="lead mb-4 text-black">
                   Discover and book tickets for concerts, sports, and more with ease.
                 </p>
                 <div className="d-flex gap-3">
@@ -45,7 +34,7 @@ export default function Home() {
                 <img 
                   src="https://lilacinfotech.com/lilac_assets/images/blog/best-practices-for-developing-an-effective-online-booking-app." 
                   alt="Event Illustration" 
-                  className="img-fluid"
+                  className="img-fluid rounded"
                 />
               </div>
             </div>

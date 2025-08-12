@@ -9,6 +9,12 @@
   color: #fff;
 }
 
+.custom-circular-gradient-bg {
+  background-image: radial-gradient(circle, #f0f0f0, #dcdcdc);
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .featureCard {
   transition: transform 0.3s ease;
 }
