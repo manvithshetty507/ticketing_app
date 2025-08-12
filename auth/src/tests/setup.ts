@@ -1,13 +1,19 @@
 // tests/setup.ts
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-
+import request from 'supertest';
 import { beforeAll, beforeEach, afterAll } from '@jest/globals';
+import app from '../app'; 
 
 let mongo: MongoMemoryServer;
 
+declare global {
+  // Add 'signin' to the globalThis type
+  var signin: () => Promise<string[]>;
+}
+
 beforeAll(async () => {
-  process.env.JWT_SECRET = 'testsecret'; // Needed if your middleware depends on it
+  process.env.JWT_KEY = 'testsecret'; // Needed if your middleware depends on it
 
   mongo = await MongoMemoryServer.create();
   const uri = mongo.getUri();
@@ -35,4 +41,17 @@ afterAll(async () => {
   }
   await mongoose.connection.close();
 });
+
+global.signin = async () => {
+  const response = await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@example.com',
+      password: 'password123'
+    })
+    .expect(201);
+
+  const cookies = response.get('Set-Cookie');
+  return cookies ? cookies : [];
+};
 

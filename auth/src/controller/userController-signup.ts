@@ -25,7 +25,6 @@ const userController = async (req : Request, res: Response) => {
         }
         */
         if(existingUser) {
-            console.log("email in use")
             throw new BadRequestError("This email is already in use! Please try to sign in")
         }
 
