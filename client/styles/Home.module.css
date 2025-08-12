@@ -1,0 +1,23 @@
+.container {
+  min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+}
+
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.05), url(''));
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+.featureCard {
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  color: #0d6efd;
+}

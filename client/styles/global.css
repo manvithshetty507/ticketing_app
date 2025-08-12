@@ -1,0 +1,13 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css');
+
+:root {
+  --primary-color: #0d6efd;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}

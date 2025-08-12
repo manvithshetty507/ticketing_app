@@ -1,0 +1,24 @@
+.authContainer {
+  min-height: 100vh;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.authCard {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.authButton {
+  padding: 0.5rem;
+  font-weight: 500;
+}
+
+/* Consistent with home page styling */
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
