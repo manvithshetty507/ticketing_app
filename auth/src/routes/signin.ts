@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { userController } from '../controller/userController-signin';
-import { ValidateRequestMiddleware } from "../middlewares/validate-request";
+import { ValidateRequestMiddleware } from "@ms_tickets_app/common";
 
 const router = express.Router();
 

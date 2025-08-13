@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { User } from "../models/user-model";
-import { BadRequestError } from "../errors/bad-request-error";
+import { BadRequestError } from "@ms_tickets_app/common";
 import { JWTUtil } from "../services/Json-web-token";
 
 

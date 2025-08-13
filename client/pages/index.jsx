@@ -30,7 +30,7 @@ export default function Home() {
                   <button className="btn btn-outline-secondary btn-lg px-4">Learn More</button>
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mt-4">
                 <img 
                   src="https://lilacinfotech.com/lilac_assets/images/blog/best-practices-for-developing-an-effective-online-booking-app." 
                   alt="Event Illustration" 

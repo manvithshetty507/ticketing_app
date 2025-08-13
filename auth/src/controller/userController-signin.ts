@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { Password } from '../services/password';
 import { validationResult } from 'express-validator';
-import { RequestValidationError } from '../errors/request-validation-error';
+import { RequestValidationError, BadRequestError } from '@ms_tickets_app/common';
 import { User } from '../models/user-model';
-import { BadRequestError } from '../errors/bad-request-error';
 import { JWTUtil } from '../services/Json-web-token';
 
 export const userController = async (req: Request, res: Response) => {

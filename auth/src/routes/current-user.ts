@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import { userController } from '../controller/userController-current-user';
-import { currentUserMiddleware } from '../middlewares/current-user';
-import { requireAuth } from '../middlewares/require-auth';
+import { currentUserMiddleware, requireAuth } from '@ms_tickets_app/common';
 
 const router = express.Router();
 

@@ -2,7 +2,7 @@ import e from 'express';
 import express, { Request, Response } from 'express';
 import { body, validationResult } from "express-validator";
 import { userController } from '../controller/userController-signup';
-import { ValidateRequestMiddleware } from "../middlewares/validate-request";
+import { ValidateRequestMiddleware } from "@ms_tickets_app/common";
 
 const router = express.Router();
 
