@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError } from '@ms_tickets_app/common';
 
 export class JWTUtil {
 

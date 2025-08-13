@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import app from './app';
-import { DatabaseConnectionError } from './errors/database-connection-error';
+// import { DatabaseConnectionError } from '@ms_tickets_app/common';
 
 // Connect to Mongo and start server
 (async () => {
@@ -13,7 +13,8 @@ import { DatabaseConnectionError } from './errors/database-connection-error';
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
     console.log('✅ Connected to MongoDB');
   } catch (error) {
-    throw new DatabaseConnectionError();
+    // throw new DatabaseConnectionError();
+    console.error('❌ Error connecting to MongoDB:', error);
   }
 
 
