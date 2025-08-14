@@ -28,3 +28,11 @@ build:
             dest: .
           - src: 'public/**/*'
             dest: .
+    - image: manvith507/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
