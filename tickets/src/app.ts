@@ -2,9 +2,11 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-
 import { errorHandler, NotFoundError } from '@ms_tickets_app/common';
 
+//routes import
+import { newTicketRouter } from './routes/new-ticket';
+import { showTicketRouter } from './routes/show-ticket';
 
 const app = express();
 
@@ -19,10 +21,9 @@ app.use(cookieSession({
 }));
 
 // Routes
-app.get('/api/tickets/test', async (req, res) => {
-  // Fetch tickets from the database
-  res.send({ message: 'Tickets API is working!' });
-});
+app.use(newTicketRouter);
+app.use(showTicketRouter)
+
 
 // 404 handler
 app.all('*', async () => {

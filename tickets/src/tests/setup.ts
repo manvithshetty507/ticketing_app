@@ -1,7 +1,7 @@
 // tests/setup.ts
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { beforeAll, beforeEach, afterAll } from '@jest/globals';
 import app from '../app'; 
 
@@ -43,6 +43,9 @@ afterAll(async () => {
 });
 
 global.signin = async () => {
+
+  // We can't signup that causes dependency on auth service instead generate a cookie
+/*
   const response = await request(app)
     .post('/api/users/signup')
     .send({
@@ -53,5 +56,24 @@ global.signin = async () => {
 
   const cookies = response.get('Set-Cookie');
   return cookies ? cookies : [];
+*/
+
+//cookie is generated base64 out of JSON {"jwt": token}
+
+  //make payload
+  const payload = {
+    id: 'testid',
+    email: 'test@example.com'
+  };
+
+  // Generate a JWT token
+  const token = jwt.sign(payload, process.env.JWT_KEY! || 'default_jwt_key');
+
+  //generate cookie
+  const session = { jwt: token };
+  const base64 = Buffer.from(JSON.stringify(session)).toString('base64');
+  
+  const cookie = `session=${base64}; HttpOnly; Path=/; SameSite=Strict;`;
+  return [cookie];
 };
 
