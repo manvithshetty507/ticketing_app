@@ -1,4 +1,4 @@
-import e from 'express';
+
 import express, { Request, Response } from 'express';
 import { body, validationResult } from "express-validator";
 import { userController } from '../controller/userController-signup';
