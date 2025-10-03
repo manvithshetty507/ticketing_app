@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from '../../app'
+import { natsWrapper } from "../../__mocks__/nats-wrapper";
 
 it('has a route handler listening to /api/tickets for post requests', async () => {
   const response = await request(app).post('/api/tickets').send({
@@ -62,4 +63,5 @@ it('creates a ticket with valid inputs', async () => {
     });
 
   expect(response.status).toBe(201);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

@@ -9,11 +9,23 @@ import { natsWrapper } from './nats-wrapper';
   if (!process.env.JWT_KEY) {
       throw new Error('JWT_KEY must be defined in environment variables');
   }
+  if (!process.env.NATS_CLUSTER_ID) {
+      throw new Error('NATS_CLUSTER_ID must be defined in environment variables');
+  }
+  if (!process.env.NATS_URL) {
+      throw new Error('NATS_URL must be defined in environment variables');
+  }
+  if (!process.env.NATS_CLIENT_ID) {
+      throw new Error('NATS_CLIENT_ID must be defined in environment variables');
+  }
+  if (!process.env.MONGO_URI) {
+      throw new Error('MONGO_URI must be defined in environment variables');
+  }
 
   try {
     await mongoose.connect('mongodb://tickets-mongo-srv:27017/tickets');
     //cluster Id from nats.depl command check c_id
-    await natsWrapper.connect('ticketing', 'client_id_random', 'http://nats-srv:4222')
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL)
 
     natsWrapper.client.on('close', () => {
       console.log("Nats is shutting off")
