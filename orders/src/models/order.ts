@@ -1,5 +1,6 @@
+import { OrderStatus } from "@ms_tickets_app/common";
 import mongoose from "mongoose";
-
+import { TicketDoc } from './ticket';
 // need three interface 
 // 1. describe the properties on record
 // 2. properties that a saved model has
@@ -32,6 +33,8 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.Created
     },
     expiresAt: {
       type: mongoose.Schema.Types.Date,
@@ -57,4 +60,6 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
 
-export const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
+const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
+
+export { Order, OrderStatus };
