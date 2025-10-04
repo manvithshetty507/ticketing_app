@@ -5,8 +5,10 @@ import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from '@ms_tickets_app/common';
 
 //routes import
-import { newTicketRouter } from './routes/new-ticket';
-import { showTicketRouter } from './routes/show-ticket';
+import { showOrderRouter } from './routes/show-order';
+import { deleteOrderRouter } from './routes/delete-order';
+import { createOrderRoute } from './routes/new-order';
+import { getAllOrderRouter } from './routes/get-all-orders';
 
 const app = express();
 
@@ -21,9 +23,10 @@ app.use(cookieSession({
 }));
 
 // Routes
-app.use(newTicketRouter);
-app.use(showTicketRouter)
-
+app.use(showOrderRouter);
+app.use(createOrderRoute);
+app.use(getAllOrderRouter);
+app.use(deleteOrderRouter);
 
 // 404 handler
 app.all('*', async () => {

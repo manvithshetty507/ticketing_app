@@ -23,7 +23,7 @@ import { natsWrapper } from './nats-wrapper';
   }
 
   try {
-    await mongoose.connect('mongodb://tickets-mongo-srv:27017/tickets');
+    await mongoose.connect(process.env.MONGO_URI);
     //cluster Id from nats.depl command check c_id
     await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL)
 
