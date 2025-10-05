@@ -12,7 +12,7 @@ declare global {
   var signin: () => Promise<string[]>;
 }
 
-jest.mock('../__mocks__/nats-wrapper');
+// jest.mock('../__mocks__/nats-wrapper');
 
 beforeAll(async () => {
   process.env.JWT_KEY = 'testsecret'; // Needed if your middleware depends on it

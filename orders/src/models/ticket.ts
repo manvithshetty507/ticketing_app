@@ -9,10 +9,11 @@ interface TicketAttrs {
 interface TicketDoc extends mongoose.Document {
     title: string,
     price: number
-    isReserved(): Promise<Boolean>
+    isReserved(): Promise<boolean>
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
+    isReserved(): boolean;
     build(attrs: TicketAttrs): TicketDoc;
 }
 
