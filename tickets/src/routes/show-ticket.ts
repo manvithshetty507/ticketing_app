@@ -1,5 +1,5 @@
 import express from 'express';
-import { showTicket, postTicket } from '../controller/shotTicketController';
+import { showTicket, postTicket } from '../controller/showTicketController';
 
 const router = express.Router();
 

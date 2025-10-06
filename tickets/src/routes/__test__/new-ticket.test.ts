@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from '../../app'
-import { natsWrapper } from "../../__mocks__/nats-wrapper";
+import { natsWrapper } from "../../nats-wrapper";
 
 it('has a route handler listening to /api/tickets for post requests', async () => {
   const response = await request(app).post('/api/tickets').send({
@@ -53,7 +53,7 @@ it('returns an error if an invalid price is provided', async () => {
 });
 
 it('creates a ticket with valid inputs', async () => {
-   const cookie = await global.signin();
+  const cookie = await global.signin();
   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', cookie[0])
