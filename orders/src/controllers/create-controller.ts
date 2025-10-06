@@ -2,6 +2,8 @@ import {Request, Response} from 'express';
 import { Ticket } from '../models/ticket';
 import { BadRequestError, NotFoundError } from '@ms_tickets_app/common';
 import { Order, OrderStatus } from '../models/order';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const EXPIRATION_WINDOW_SECONDS = 10 * 60;
 
@@ -47,5 +49,21 @@ export const createController = async (req: Request, res: Response) => {
     await order.save();
 
     // Publish an event order was created
+    try {
+    await new OrderCreatedPublisher(natsWrapper.client).publish({
+        id: order.id,
+        status: order.status as OrderStatus,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: {
+            id: ticket.id,
+            price: ticket.price
+        }
+    });
+    } catch (err) {
+    console.error("Failed to publish event:", err);
+    throw new BadRequestError("Event publishing failed");
+    }
+
     res.status(201).send(order);
 }

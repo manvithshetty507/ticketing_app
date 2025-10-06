@@ -7,12 +7,12 @@ import app from '../app';
 
 let mongo: MongoMemoryServer;
 
+jest.mock('../nats-wrapper');
+
 declare global {
   // Add 'signin' to the globalThis type
   var signin: (userName: string) => Promise<string[]>;
 }
-
-// jest.mock('../__mocks__/nats-wrapper');
 
 beforeAll(async () => {
   process.env.JWT_KEY = 'testsecret'; // Needed if your middleware depends on it
@@ -26,6 +26,9 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+
+   jest.clearAllMocks(); 
+
   // Clean all collections between tests
   const db = mongoose.connection.db;
   if (!db) {
