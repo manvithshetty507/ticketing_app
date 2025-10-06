@@ -26,8 +26,8 @@ export const createController = async (req: Request, res: Response) => {
     //         ]
     //     }
     // })
-    //added above logn to ticket model
-    const existingOrder = await Ticket.isReserved();
+    //added above logic to ticket model
+    const existingOrder = await ticket.isReserved();
 
     if(existingOrder) {
         throw new BadRequestError('The requested ticket is not available');
@@ -47,5 +47,5 @@ export const createController = async (req: Request, res: Response) => {
     await order.save();
 
     // Publish an event order was created
-
+    res.status(201).send(order);
 }

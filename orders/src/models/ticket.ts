@@ -51,6 +51,7 @@ ticketSchema.methods.isReserved = async function() {
             ]
         }
     })
+    
     return !!existingOrder;
 }
 

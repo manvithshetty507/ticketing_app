@@ -8,7 +8,7 @@ import { errorHandler, NotFoundError } from '@ms_tickets_app/common';
 import { showOrderRouter } from './routes/show-order';
 import { deleteOrderRouter } from './routes/delete-order';
 import { createOrderRoute } from './routes/new-order';
-import { getAllOrderRouter } from './routes/get-all-orders';
+import { getAllOrderRouter } from './routes/get-a-order';
 
 const app = express();
 

@@ -6,7 +6,7 @@ import { Order, OrderStatus } from '../../models/order';
 
 it("return an error if the user tries to order ticket that doesn't exists", async () => {
     const ticketId = new mongoose.Types.ObjectId();
-    const cookies = await global.signin();
+    const cookies = await global.signin('test123');
     
     await request(app)
         .post('/api/orders')
@@ -25,17 +25,46 @@ it('It fails when the ticket is already reserved', async () => {
 
     const order = Order.build({
         ticket,
-        userId: '',
+        userId: 'randomuserId',
         status: OrderStatus.Created,
         expiresAt: new Date()
     })
 
     await order.save();
+    const cookies = await global.signin('test123');
+    // Basic existence check
+    expect(cookies).toBeDefined();
+    expect(Array.isArray(cookies)).toBe(true);
+    expect(cookies.length).toBeGreaterThan(0);
 
     await request(app)
         .post('/api/orders')
-        .send({
-            ticketId: ticket.id
-        })
+        .set('Cookie', cookies[0])
+        .send({ ticketId: ticket.id })
         .expect(400)
+    
 })
+
+it("create a success ticket", async () => {
+    const ticket = Ticket.build({
+        title: 'concert',
+        price: 20
+    })
+
+    await ticket.save();
+
+    const cookies = await global.signin('test123');
+
+    // Basic existence check
+    expect(cookies).toBeDefined();
+    expect(Array.isArray(cookies)).toBe(true);
+    expect(cookies.length).toBeGreaterThan(0);
+
+    await request(app)
+        .post('/api/orders')
+        .set('Cookie', cookies[0])
+        .send({ ticketId: ticket.id })
+        .expect(201)
+})
+
+it.todo('emit order created event')

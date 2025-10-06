@@ -1,9 +1,11 @@
-import express, {Request, Response} from 'express';
+import { currentUserMiddleware, requireAuth } from '@ms_tickets_app/common';
+import express from 'express';
+import { showOrdersController } from '../controllers/show-orders-controller';
 
 const router = express.Router();
 
-router.get('/api/orders', async (req: Request, res: Response) => {
-    return res.status(200).json({msg: "test success"})
-})
+router.get('/api/orders', 
+    currentUserMiddleware, 
+    requireAuth, showOrdersController)
 
 export {router as showOrderRouter}
