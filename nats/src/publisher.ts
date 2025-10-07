@@ -25,6 +25,7 @@ stan.on('connect', () => {
   publisher.publish({
     id: '123',
     title: 'concert',
-    price: 20
+    price: 20,
+    userId: 'adhbajfn'
   })
 });

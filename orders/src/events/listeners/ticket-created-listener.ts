@@ -8,14 +8,16 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
     queueGroupName: string = queueGroupName;
     
     async onMessage(data: TicketCreatedEvent['data'], msg: Message): Promise<void> {
-        
-        // we will persist some data from ticket, so that we decouple from the ticket service
-        console.log('[orders] TicketCreatedListener received data:', data);
-        const { id, title, price } = data;
-        const ticket = Ticket.build({ id, title, price });
-        await ticket.save();
+        try {
+            console.log('[orders] TicketCreatedListener received data:', data);
+            const { id, title, price } = data;
+            const ticket = Ticket.build({ id, title, price });
+            await ticket.save();
 
-        // acknowledge the message 
-        msg.ack();
+            msg.ack();
+        } catch (error) {
+            console.error('Error processing TicketCreated event', error);
+            // Do NOT ack the message, so NATS will retry it later
+        }
     }
 }
