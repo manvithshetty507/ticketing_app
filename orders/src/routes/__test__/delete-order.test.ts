@@ -2,11 +2,13 @@ import request from 'supertest'
 import app from '../../app'
 import { Ticket } from '../../models/ticket'
 import { Order, OrderStatus } from '../../models/order'
+import mongoose from 'mongoose'
 
 it('cancels the order when done by appropriate user', async () => {
     const ticket = Ticket.build({
         title: 'concert',
-        price: 20000
+        price: 20000,
+        id: new mongoose.Types.ObjectId().toHexString(),
     })
 
     await ticket.save();
@@ -40,7 +42,8 @@ it('cancels the order when done by appropriate user', async () => {
 it('cancel fails if done by wrong user', async () => {
     const ticket = Ticket.build({
         title: 'concert',
-        price: 20000
+        price: 20000,
+        id: new mongoose.Types.ObjectId().toHexString(),
     })
 
     await ticket.save();

@@ -18,6 +18,7 @@ export const newTicketController = async (req: Request, res: Response) => {
   // publish event "ticket:created"
   new TicketCreatedPublisher(natsWrapper.client).publish({
     id: ticket.id,
+    version: ticket.version,
     title: ticket.title, 
     price: ticket.price, 
     userId: ticket.userId

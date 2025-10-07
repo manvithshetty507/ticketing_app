@@ -5,7 +5,11 @@ import { Order } from '../../models/order';
 import { Ticket } from '../../models/ticket';
 
 const buildTicket = async (title: string, price: number) => {
-    const ticket = Ticket.build({ title, price });
+    const ticket = Ticket.build({ 
+        title, 
+        price,
+        id: new mongoose.Types.ObjectId().toHexString(),
+     });
     await ticket.save()
     return ticket;
 }

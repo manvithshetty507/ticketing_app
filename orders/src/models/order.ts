@@ -1,6 +1,8 @@
 import { OrderStatus } from "@ms_tickets_app/common";
 import mongoose from "mongoose";
 import { TicketDoc } from './ticket';
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+
 // need three interface 
 // 1. describe the properties on record
 // 2. properties that a saved model has
@@ -15,6 +17,7 @@ interface OrderAttrs {
 
 interface OrderDoc extends mongoose.Document {
     userId: string,
+    version: number,
     status: string,
     expiresAt: Date,
     ticket: TicketDoc
@@ -55,6 +58,8 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin)
 // 5. Add static method
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
