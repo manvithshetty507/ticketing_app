@@ -19,7 +19,7 @@ it('returns a 404 if the provided id does not exist', async () => {
 
 it('returns a 401 if the user is not authenticated', async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
-
+  // no cookie sent so expect 401
   await request(app)
     .put(`/api/tickets/${id}`)
     .send({
@@ -38,10 +38,10 @@ it('returns a 401 if the user does not own the ticket', async () => {
         title: 'asldkfj',
         price: 20,
         });
-
+    const [ cookie2 ] = await global.signin('test12444');
     await request(app)
         .put(`/api/tickets/${response.body.id}`)
-        .set('Cookie', cookie)
+        .set('Cookie', cookie2)
         .send({
         title: 'alskdjflskjdf',
         price: 1000,

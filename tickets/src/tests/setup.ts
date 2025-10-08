@@ -9,7 +9,7 @@ let mongo: MongoMemoryServer;
 
 declare global {
   // Add 'signin' to the globalThis type
-  var signin: () => Promise<string[]>;
+  var signin: (id?: string) => Promise<string[]>;
 }
 
 jest.mock('../nats-wrapper');
@@ -45,7 +45,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
+global.signin = async (id?: string) => {
 
   // We can't signup that causes dependency on auth service instead generate a cookie
 /*
@@ -65,7 +65,7 @@ global.signin = async () => {
 
   //make payload
   const payload = {
-    id: 'testid',
+    id: id || 'testid',
     email: 'test@example.com'
   };
 

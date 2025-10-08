@@ -7,6 +7,7 @@ import { errorHandler, NotFoundError } from '@ms_tickets_app/common';
 //routes import
 import { newTicketRouter } from './routes/new-ticket';
 import { showTicketRouter } from './routes/show-ticket';
+import { updateTicketRouter } from './routes/update-ticket';
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.use(cookieSession({
 
 // Routes
 app.use(newTicketRouter);
-app.use(showTicketRouter)
+app.use(showTicketRouter);
+app.use(updateTicketRouter);
 
 
 // 404 handler
