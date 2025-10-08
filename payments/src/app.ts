@@ -5,6 +5,7 @@ import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from '@ms_tickets_app/common';
 
 //routes import
+import { newChargeRouter } from './routes/new-charge';
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(cookieSession({
 }));
 
 // Routes
-
+app.use(newChargeRouter);
 
 // 404 handler
 app.all('*', async () => {
