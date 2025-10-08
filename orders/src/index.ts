@@ -4,6 +4,7 @@ import app from './app';
 import { natsWrapper } from './nats-wrapper';
 import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
 import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
+import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
 
 // Connect to Mongo and start server
 (async () => {
@@ -40,6 +41,7 @@ import { TicketUpdatedListener } from './events/listeners/ticket-updated-listene
 
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
+    new ExpirationCompleteListener(natsWrapper.client).listen();
     console.log('[BOOT] Listeners registered ✅');
     
   } catch (error) {
