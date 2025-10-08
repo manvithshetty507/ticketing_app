@@ -27,6 +27,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   // Clean all collections between tests
+  jest.clearAllMocks();
   const db = mongoose.connection.db;
   if (!db) {
     throw new Error('Database connection is not established.');

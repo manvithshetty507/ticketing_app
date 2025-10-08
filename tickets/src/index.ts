@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import app from './app';
 // import { DatabaseConnectionError } from '@ms_tickets_app/common';
 import { natsWrapper } from './nats-wrapper';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 // Connect to Mongo and start server
 (async () => {
@@ -35,6 +37,11 @@ import { natsWrapper } from './nats-wrapper';
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
     console.log('✅ Connected to MongoDB');
+
+    // setup listener
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
+    
   } catch (error) {
     // throw new DatabaseConnectionError();
     console.error('❌ Error connecting to MongoDB:', error);

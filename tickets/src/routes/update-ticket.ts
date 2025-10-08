@@ -5,6 +5,7 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from '@ms_tickets_app/common';
 import { Ticket } from '../models/ticket-model';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
@@ -33,10 +34,16 @@ router.put(
       throw new NotAuthorizedError();
     }
 
+
+    if(ticket.orderId) {
+      throw new BadRequestError('Ticket is reserved so cant edit this ticket');
+    }
+
     ticket.set({
       title: req.body.title,
       price: req.body.price,
     });
+
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,

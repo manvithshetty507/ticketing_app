@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { newTicketController } from '../controller/newTicketController';
+import { newTicketController } from '../controller/new-ticket-controller';
 import { currentUserMiddleware, requireAuth, ValidateRequestMiddleware } from '@ms_tickets_app/common';
 import { body } from 'express-validator';
 
