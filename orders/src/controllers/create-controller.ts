@@ -5,6 +5,7 @@ import { Order, OrderStatus } from '../models/order';
 import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
+// set the expiration to 10 mins
 const EXPIRATION_WINDOW_SECONDS = 10 * 60;
 
 export const createController = async (req: Request, res: Response) => {
