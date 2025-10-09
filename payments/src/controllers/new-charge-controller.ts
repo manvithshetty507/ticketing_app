@@ -22,12 +22,22 @@ export const newChargeController = async (req: Request, res: Response) => {
         throw new BadRequestError('Cannot initiate payment for expired order');
     }
 
-    const charge = await stripe.charges.create({
-        currency: 'inr',
-        amount: order.price * 100,
-        source: token,
+   // Create a PaymentMethod from the token
+    const paymentMethod = await stripe.paymentMethods.create({
+        type: 'card',
+        card: {
+            token: token
+        }
+    });
 
-    })
+    // Create and confirm PaymentIntent with the PaymentMethod
+    const charge = await stripe.paymentIntents.create({
+        amount: order.price * 100,
+        currency: 'inr',
+        payment_method: paymentMethod.id,
+        confirm: true,
+        return_url: 'https://example.com/complete'
+    });
 
     // create a payment record -> not used but good to keep
 
