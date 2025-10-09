@@ -11,7 +11,7 @@ export const createAxiosClient = (req) => {
   } else {
     // Client-side
     return axios.create({
-      baseURL: '/',
+      baseURL: process.env.NODE_ENV === 'local' ? 'https://ticketing.dev' : '/',
       headers: {},
     });
   }
