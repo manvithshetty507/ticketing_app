@@ -1,32 +1,113 @@
-# name: deploy
+name: deploy
 
 # on:
 #     push:
 #         branches:
-#             - master
+#             - master # Trigger on push to master branch
 #         paths:
-#             - "auth/**" # Only trigger workflow when files in auth/ change
+#             - "auth/**" # Trigger when files in 'auth/' folder change
+#             - "orders/**" # Trigger when files in 'orders/' folder change
+#             - "payments/**" # Trigger when files in 'payments/' folder change
+#             - "tickets/**" # Trigger when files in 'tickets/' folder change
+on:
+    workflow_dispatch:
+jobs:
+    # Auth Service Deployment
+    auth-service:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2 # Checkout code from the repository
 
-# jobs:
-#     auth-service:
-#         runs-on: ubuntu-latest
-#         steps:
-#             - uses: actions/checkout@v2
-#             # make the image push to docker hub and then deploy to kubernetes cluster
-#             # need to add docker username password to git for access - secrets
-#             - run: cd auth && docker build -t manvith507/auth .
+            # Build and push Docker image for Auth service
+            - run: cd auth && docker build -t manvith507/auth .
 
-#             - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-#               env:
-#                   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-#                   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+            - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-#             - run: docker push manvith507/auth
+            - run: docker push manvith507/auth
 
-#             - uses: digitalocean/action-doctl@v2
-#               with:
-#                   token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            # Deploy to Kubernetes cluster
+            - uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-#             - run: doctl kubernetes cluster kubeconfig save ticketing-cluster
+            - run: doctl kubernetes cluster kubeconfig save ticketing-cluster
 
-#             - run: kubectl rollout restart deployment/auth-depl
+            - run: kubectl rollout restart deployment/auth-depl # Restart the Auth deployment
+
+    # Orders Service Deployment
+    orders-service:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2 # Checkout code from the repository
+
+            # Build and push Docker image for Orders service
+            - run: cd orders && docker build -t manvith507/orders .
+
+            - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+            - run: docker push manvith507/orders
+
+            # Deploy to Kubernetes cluster
+            - uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+            - run: doctl kubernetes cluster kubeconfig save ticketing-cluster
+
+            - run: kubectl rollout restart deployment/orders-depl # Restart the Orders deployment
+
+    # Payments Service Deployment
+    payments-service:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2 # Checkout code from the repository
+
+            # Build and push Docker image for Payments service
+            - run: cd payments && docker build -t manvith507/payments .
+
+            - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+            - run: docker push manvith507/payments
+
+            # Deploy to Kubernetes cluster
+            - uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+            - run: doctl kubernetes cluster kubeconfig save ticketing-cluster
+
+            - run: kubectl rollout restart deployment/payments-depl # Restart the Payments deployment
+
+    # Tickets Service Deployment
+    tickets-service:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2 # Checkout code from the repository
+
+            # Build and push Docker image for Tickets service
+            - run: cd tickets && docker build -t manvith507/tickets .
+
+            - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+            - run: docker push manvith507/tickets
+
+            # Deploy to Kubernetes cluster
+            - uses: digitalocean/action-doctl@v2
+              with:
+                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+            - run: doctl kubernetes cluster kubeconfig save ticketing-cluster
+
+            - run: kubectl rollout restart deployment/tickets-depl # Restart the Tickets deployment
