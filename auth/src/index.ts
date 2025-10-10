@@ -4,6 +4,7 @@ import app from './app';
 
 // Connect to Mongo and start server
 (async () => {
+  console.log("auth service starting...");
   //check for env variables
   if (!process.env.JWT_KEY) {
       throw new Error('JWT_KEY must be defined in environment variables');
