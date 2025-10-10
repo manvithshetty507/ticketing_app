@@ -1,12 +1,31 @@
 name: test
 
 on:
-  pull_request
+  pull_request:
 
 jobs:
-  build: 
-    runs-on: ubuntu:latest
+  auth-service:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: cd auth && npm install && npm run test:ci
+
+  order-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd order && npm install && npm run test:ci
+
+  ticket-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd ticket && npm install && npm run test:ci
+
+  payment-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd payment && npm install && npm run test:ci
+
       
