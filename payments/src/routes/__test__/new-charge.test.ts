@@ -60,7 +60,7 @@ it("return 400 when purchasing a cancelled order", async () => {
         .expect(400)
 })
 
-it('return 204 on valid details with success', async () => {
+it('return 201 on valid details with success', async () => {
     const orderId = new mongoose.Types.ObjectId().toHexString();
     const [ cookie ] = await global.signin('random1243');
 
@@ -79,8 +79,8 @@ it('return 204 on valid details with success', async () => {
         .send({ token : 'tok_visa', orderId })
         .expect(201)
     
-    const chargeOptions = await (stripe.charges.create as jest.Mock).mock.calls[0][0];
-    expect(chargeOptions.source).toEqual('tok_visa');
+    const chargeOptions = await (stripe.paymentIntents.create as jest.Mock).mock.calls[0][0];
+
     expect(chargeOptions.amount).toEqual(20 * 100);
     expect(chargeOptions.currency).toEqual('inr');
 
