@@ -14,18 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd order && npm install && npm run test:ci
+      - run: cd orders && npm install && npm run test:ci
 
   ticket-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd ticket && npm install && npm run test:ci
+      - run: cd tickets && npm install && npm run test:ci
 
   payment-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd payment && npm install && npm run test:ci
+      - run: cd payments && npm install && npm run test:ci
 
       
