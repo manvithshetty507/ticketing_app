@@ -1,78 +1,73 @@
-# Ticket App
 
-### Tech-stacks and Tools
-- NodeJs - Microservice (Typescript)
-- NextJs
-- Kubernetes
-- Github Action
-- Redis
+## 🚀 Features
 
-    apps/v1 is for Deployments, ReplicaSets, StatefulSets (workloads).
-    v1 is for core resources like Services, Pods, ConfigMaps.
+### ✅ Implemented (Backend)
+- Authentication & Authorization (JWT-based)
+- Ticket creation, editing, and listing
+- Order creation & expiration logic
+- Event-driven architecture using NATS Streaming
+- Payment integration with Stripe (mock/test mode)
+- Global error handling and validation
+- MongoDB-based persistence per service
+- Dockerized services with Kubernetes deployments
 
-# Some Kube commands
-    kubectl get deployments -n ingress-nginx
-| NAME                     | READY | UP-TO-DATE | AVAILABLE | AGE |
-| ------------------------ | :---: | :--------: | :-------: | :-: |
-| ingress-nginx-controller |  1/1  |      1     |     1     |  Xd |
+### ✅ Implemented  (Frontend)
+- Client UI built in Next.js + React
+- End-to-end user experience: browsing, buying, and managing tickets
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Tech Used                          |
+|--------------|------------------------------------|
+| Frontend     | Next.js, React, Tailwind CSS (WIP) |
+| Backend      | Node.js, Express, TypeScript       |
+| Database     | MongoDB                            |
+| Messaging    | NATS Streaming Server              |
+| Auth         | JWT + Cookies                      |
+| DevOps       | Docker, Kubernetes, Skaffold       |
+| Payments     | Stripe (Test Mode)                 |
+
+---
+
+## 📁 Microservices Overview
+
+| Service         | Description                             |
+|------------------|-----------------------------------------|
+| **Auth**         | Handles signup, signin, signout, current user |
+| **Tickets**      | CRUD operations for event tickets       |
+| **Orders**       | Manages ticket reservations/orders      |
+| **Expiration**   | Cancels expired orders automatically    |
+| **Payments**     | Handles Stripe payments                 |
+| **Client**       | Frontend UI (WIP)                       |
+
+---
+
+## 📸 Screenshots / Video Demo
+
+*(To be added soon)*
+
+---
+
+## 🧪 Running Locally (Backend Only)
+
+### Prerequisites:
+- Docker
+- Kubernetes (e.g., Docker Desktop, Minikube)
+- Skaffold
+- NATS Streaming Server (embedded via deployment)
+- Stripe test keys
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/your-username/ticketing-app.git
+cd ticketing-app
+
+// Add in k8 secrets
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=your_jwt_secret
+kubectl create secret generic stripe-key --from-literal=STRIPE_KEY=your_stripe_test_key
 
 
-    kubectl get svc -n ingress-nginx
-| NAME                     | TYPE         | CLUSTER-IP      | EXTERNAL-IP | PORT(S)                       | AGE |
-| ------------------------ | ------------ | --------------- | ----------- | ----------------------------- | --- |
-| ingress-nginx-controller | LoadBalancer | xxx.xxx.xxx.xxx | `<pending>` | 80\:xxxxx/TCP, 443\:xxxxx/TCP | Xd  |
-
-
-
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.13.0/deploy/static/provider/cloud/deploy.yaml
-
-# ingress commands
-    kubectl delete ingress ingress-service
-    kubectl get ingress -n infra -> if namespace used else ignore -n and after
-    kubectl get svc -n infra
-    kubectl get pods -n infra
-
-# clear everthing
-    kubectl delete all --all --all-namespaces
-    kubectl delete namespace ingress-nginx metallb-system --ignore-not-found
-    kubectl delete clusterrolebinding --all
-    kubectl delete clusterrole --all --ignore-not-found
-    kubectl delete pv --all --ignore-not-found
-
-# setup test nginx
-### Create a test deployment
-    kubectl create deployment nginx --image=nginx
-    kubectl expose deployment nginx --port=80
-
-### Create an ingress rule
-    kubectl create ingress nginx --rule="example.com/*=nginx:80"
-
-### Test it (replace with your actual IP if not using Docker Desktop)
-    curl -H "Host: example.com" http://localhost
-
-# Delete test nginx
-### Delete the ingress rule
-    kubectl delete ingress nginx
-
-### Delete the service
-    kubectl delete service nginx
-
-### Delete the deployment
-    kubectl delete deployment nginx
-
-# Add a Secrete Key
-    kubectl create secret generic jwt-secret --from-literal=JWT_KEY='huHuz/N5gVFKzoTiMefwIpLKC5hJ0p3/fbgvFVqwt+0='
-### Get the yaml for secrete object
-    kubectl get secret jwt-secret -o yaml
-
-
-
-    User Request (example.com)  
-        ↓  
-    Load Balancer / NodePort (if on cloud/local)  
-        ↓  
-    Ingress-NGINX Controller (decides routing)  
-        ↓  
-    Kubernetes Service (exposes your app)  
-        ↓  
-    Pods (running your app)  
+skaffold dev
+```
