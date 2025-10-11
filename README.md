@@ -44,6 +44,31 @@
 
 ---
 
+## ⚙️ DevOps & CI/CD
+
+### ✅ GitHub Actions (CI)
+
+The project includes a GitHub Actions workflow to run tests automatically on:
+
+- Code pushes
+- Pull requests
+
+This ensures that all services are passing their test suites before merging.
+
+📁 Workflow: [.github/workflows/test.yml](.github/workflows/test.yml)
+
+### 🔜 Deployment-Ready
+
+While not deployed yet, the project includes:
+
+- Dockerfiles for each service
+- Kubernetes configs for production and local dev
+- Scripts to auto-update Docker images on code changes
+- Skaffold integration for local Kubernetes dev
+
+These are ready to be enabled for cloud deployment (AWS/GCP/DigitalOcean) when needed.
+
+
 ## 📸 Screenshots / Video Demo
 
 *(To be added soon)*
