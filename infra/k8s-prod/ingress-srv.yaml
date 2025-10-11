@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: ticketing.dev # change this to purchased domain later
+    - host: ticketing.dev # change this to purchased domain later ex: wwww.<domain : ticketing_app.abc>
       http:
         paths:
           - path: /api/users/?(.*)
